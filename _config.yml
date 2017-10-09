@@ -5,7 +5,7 @@ header-img: img/home-bg.jpg
 email: 305858610@qq.com
 description: ""
 keyword: ""
-url: "http://xiaven.com"              # your host, for absolute URL
+url: "http://xiaven.github.io"              # your host, for absolute URL
 baseurl: ""         # for example, '/blog' if your blog hosted on 'host/blog'
 
 port: 23457
