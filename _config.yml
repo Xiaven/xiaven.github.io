@@ -47,7 +47,7 @@ kramdown:
 
 
 # Disqus settings
-disqus_username: dis351135612
+disqus_username: Xiaven
 comments: true
 layout: default
 
@@ -57,14 +57,14 @@ layout: default
 # Baidu Analytics
 ba_track_id: 532c5cf7a78587d36cef36ef42716e48
 # Google Analytics
-#ga_track_id: 'UA-105158501-1'            # Format: UA-xxxxxx-xx
-#ga_domain: auto
+ga_track_id: 'UA-107854261-1'            # Format: UA-xxxxxx-xx
+ga_domain: auto
 
 
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "码农的自留地，记录自己的所见、所学、所感。"
+sidebar-about-description: "记录自己的所见、所学、所感。"
 sidebar-avatar: /img/raven.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
