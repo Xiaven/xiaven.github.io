@@ -36,7 +36,6 @@
                         </a>
                     </li>
                     {% endif %}
-                    
                     {% if site.weibo_username %}
                     <li>
                         <a target="_blank" href="http://weibo.com/{{ site.weibo_username }}">
@@ -59,7 +58,6 @@
                         </a>
                     </li>
                     {% endif %}
-                    
                     {% if site.github_username %}
                     <li>
                         <a target="_blank" href="https://github.com/{{ site.github_username }}">
@@ -70,32 +68,63 @@
                         </a>
                     </li>
                     {% endif %}
-                    
+                    {% if site.linkedin_username %}
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/{{ site.linkedin_username }}">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    {% endif %}
                 </ul>
                 <p class="copyright text-muted">
                     Copyright &copy; {{ site.title }} {{ site.time | date: '%Y' }}
                     <br>
                     Theme by <a href="http://huangxuan.me">Hux</a> |
-                    <iframe
-                        style="margin-left: 2px; margin-bottom:-5px;"
-                        frameborder="0" scrolling="0" width="91px" height="20px"
-                        src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
-                    </iframe>
+                    Count by <a href="http://ibruce.info/">不蒜子</a>
+                    您是本站第<span id="busuanzi_value_site_uv"></span>位小伙伴
                 </p>
+                <p class="copyright text-muted" id="count">
             </div>
         </div>
     </div>
 </footer>
 
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script>
+
+    window.setInterval('counter()',1000);
+    function counter(){
+        var date=new Date();
+        var startDate=new Date(2017,7,24,0,0,0);
+        var time=(date-startDate)/1000;
+        var day=Math.floor(time/(24*60*60));
+        var hour=Math.floor(time%(24*60*60)/(60*60));
+        var minute=Math.floor(time%(24*60*60)%(60*60)/60);
+        var second=Math.floor(time%(24*60*60)%(60*60)%60);
+        var str="我的博客已默默运行了" + day + "天" + hour +"时" + minute + "分" + second + "秒";
+        document.getElementById('count').innerHTML=str;
+    }
+</script>
+
 <!-- jQuery -->
 <script src="{{ "/js/jquery.min.js " | prepend: site.baseurl }}"></script>
 
 <!-- Bootstrap Core JavaScript -->
+<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
 <script src="{{ "/js/bootstrap.min.js " | prepend: site.baseurl }}"></script>
 
 <!-- Custom Theme JavaScript -->
 <script src="{{ "/js/hux-blog.min.js " | prepend: site.baseurl }}"></script>
 
+<!-- Service Worker -->
+{% if site.service-worker %}
+<script src="{{ "/js/snackbar.js " | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/sw-registration.js " | prepend: site.baseurl }}"></script>
+{% endif %}
 
 <!-- async load function -->
 <script>
@@ -109,14 +138,15 @@
     }
 </script>
 
-<!-- 
-     Because of the native support for backtick-style fenced code blocks 
-     right within the Markdown is landed in Github Pages, 
-     From V1.6, There is no need for Highlight.js, 
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
      so Huxblog drops it officially.
 
-     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
-     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
 -->
 <!--
     <script>
@@ -132,7 +162,7 @@
 <script>
     // only load tagcloud.js in tag.html
     if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
+        async('{{ "/js/jquery.tagcloud.js" | prepend: site.baseurl }}',function(){
             $.fn.tagcloud.defaults = {
                 //size: {start: 1, end: 1, unit: 'em'},
                 color: {start: '#bbbbee', end: '#0085a1'},
@@ -144,7 +174,7 @@
 
 <!--fastClick.js -->
 <script>
-    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -186,3 +216,73 @@
     })();
 </script>
 {% endif %}
+
+
+
+<!-- Side Catalog -->
+{% if page.catalog %}
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("{{ '/js/jquery.nav.js' | prepend: site.baseurl }}", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+{% endif %}
+
+<!-- search -->
+<div class="search-tool" style="position: fixed; top: 0px ; bottom: 0px; left: 0px; right:  0px;
+    opacity: 0.95; background-color: #111111; z-index: 9999; display: none;">
+  <input type="text" class="form-control search-content" id="search-content" style="position: fixed; top: 60px"
+         placeholder="文章标题 日期 标签"
+         >
+
+  <div style="position: fixed; top: 16px; right: 16px;">
+      <img src="/search/img/cb-close.png"  id="close-btn"/>
+  </div>
+</div>
+
+<div style="position: fixed; right: 16px; bottom: 20px;">
+  <img id="search-btn" width="36px" height="36px" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MDkuMjg3IDUwOS4yODciIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUwOS4yODcgNTA5LjI4NzsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSI1MTJweCIgaGVpZ2h0PSI1MTJweCI+CjxjaXJjbGUgc3R5bGU9ImZpbGw6IzcxRDQ1NjsiIGN4PSIyNTQuNjQ0IiBjeT0iMjU0LjY0NCIgcj0iMjU0LjY0NCIvPgo8cGF0aCBzdHlsZT0iZmlsbDojRjFGM0Y3OyIgZD0iTTExNi4zMDIsNzIuOTAxdjM1Ny4zODNjMCw4LjgxNiw3LjEyMSwxNS45MzYsMTUuOTM2LDE1LjkzNmgyMTMuMjc3ICBjOC44MTYsMCwxNS45MzYtNy4xMjEsMTUuOTM2LTE1LjkzNlY3Mi45MDFjMC04LjgxNi03LjEyMS0xNS45MzYtMTUuOTM2LTE1LjkzNkgxMzIuMjM4ICBDMTIzLjQyMyw1Ni45NjQsMTE2LjMwMiw2NC4wODUsMTE2LjMwMiw3Mi45MDF6Ii8+CjxyZWN0IHg9IjEzMS41NiIgeT0iODkuODU0IiBzdHlsZT0iZmlsbDojNkVCMUUxOyIgd2lkdGg9IjIxNC42MzMiIGhlaWdodD0iMzA0LjQ4NyIvPgo8Zz4KCTxjaXJjbGUgc3R5bGU9ImZpbGw6I0RFREVERjsiIGN4PSIyMzguNzA3IiBjeT0iNDIwLjExMSIgcj0iMTUuOTM2Ii8+Cgk8cGF0aCBzdHlsZT0iZmlsbDojREVERURGOyIgZD0iTTIxOC43MDIsNzYuMjkxYzAsMS42OTUsMS4zNTYsMy4wNTIsMy4wNTIsMy4wNTJoMzMuNTY4YzEuNjk1LDAsMy4wNTItMS4zNTYsMy4wNTItMy4wNTIgICBjMC0xLjY5NS0xLjM1Ni0zLjA1Mi0zLjA1Mi0zLjA1MmgtMzMuNTY4QzIyMC4wNTgsNzMuMjQsMjE4LjcwMiw3NC41OTYsMjE4LjcwMiw3Ni4yOTF6Ii8+CjwvZz4KPHJlY3QgeD0iMzgwLjgwMyIgeT0iMzI5Ljc2NyIgdHJhbnNmb3JtPSJtYXRyaXgoLTAuNzA3MSAwLjcwNzEgLTAuNzA3MSAtMC43MDcxIDkxNS42NTE3IDMyMS45NjQ3KSIgc3R5bGU9ImZpbGw6IzQxNDc1MzsiIHdpZHRoPSIyMC42ODMiIGhlaWdodD0iNDEuNzA2Ii8+CjxjaXJjbGUgc3R5bGU9ImZpbGw6IzY0NkI3OTsiIGN4PSIyODQuMTQzIiBjeT0iMjQzLjc5MyIgcj0iMTM5LjY5OCIvPgo8Y2lyY2xlIHN0eWxlPSJmaWxsOiNGQ0ZDRkQ7IiBjeD0iMjg0LjE0MyIgY3k9IjI0My43OTMiIHI9IjExMy4yNSIvPgo8Y2lyY2xlIHN0eWxlPSJmaWxsOiMwMDkwRkY7IiBjeD0iMjg0LjE0MyIgY3k9IjI0My43OTMiIHI9IjEwMC43MDUiLz4KPGc+Cgk8cGF0aCBzdHlsZT0iZmlsbDojNjQ2Qjc5OyIgZD0iTTQ2MC40NjEsNDQ5LjYxMWMzLjM5MSwzLjM5MSw4LjQ3NywzLjM5MSwxMS44NjgsMGwyMC4wMDUtMjAuMDA1YzMuMzkxLTMuMzkxLDMuMzkxLTguNDc3LDAtMTEuODY4ICAgbC0yLjM3NC0yLjM3NGwtMzEuODczLDMxLjg3M0w0NjAuNDYxLDQ0OS42MTF6Ii8+Cgk8cGF0aCBzdHlsZT0iZmlsbDojNjQ2Qjc5OyIgZD0iTTQyMy41MDIsMzQ4LjkwNmMtMy4zOTEtMy4zOTEtOC40NzctMy4zOTEtMTEuODY4LDBsLTIwLjAwNSwyMC4wMDUgICBjLTMuMzkxLDMuMzkxLTMuMzkxLDguNDc3LDAsMTEuODY4bDIuMzczLDIuMzc0bDMxLjg3My0zMS44NzNMNDIzLjUwMiwzNDguOTA2eiIvPgo8L2c+CjxyZWN0IHg9IjM5Ni43MzYiIHk9IjM3Ny4wNDEiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgNDExLjg5MTMgLTE5NS41NTUpIiBzdHlsZT0iZmlsbDojRkJEMzAzOyIgd2lkdGg9IjkwLjUzMiIgaGVpZ2h0PSI0NC43NTciLz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==" />
+</div>
+
+<link rel="stylesheet" href="{{ "/search/css/cb-search.css" | prepend: site.baseurl }}">
+
+<script src="{{ "/search/js/bootstrap3-typeahead.min.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/search/js/cb-search.js" | prepend: site.baseurl }}"></script>

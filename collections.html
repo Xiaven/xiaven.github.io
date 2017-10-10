@@ -1,0 +1,15 @@
+---
+
+layout: post
+catalog: true
+title : Collections
+description: "APP & Movie & Music"
+header-img: "img/collection-bg.jpg"
+
+---
+
+<!-- Chinese Version -->
+<div class="post-container">
+    {% capture apps %}{% include collections.md %}{% endcapture %}
+    {{ apps | markdownify }}
+</div>
