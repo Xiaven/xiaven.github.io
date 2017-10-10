@@ -88,13 +88,13 @@ service-worker: true
 
 # Friends
 friends: [
-	{   
+	{
         title: "Disqus",
         href: "https://disqus.com/"
 	},{
         title: "暗时间",
         href: "http://mindhacks.cn/"
-	}{
+	},{
         title: "Hux模板",
         href: "https://github.com/Huxpro/huxpro.github.io"
     },{
