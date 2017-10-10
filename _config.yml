@@ -19,7 +19,11 @@ github_username:    Xiaven
 twitter_username:   
 #facebook_username:  huxpro
 
-
+# Site Map
+collections_path: collections
+archive_path:     archives
+tags_path:        tags
+about_path:       about
 
 # Build settings
 highlighter: rouge
