@@ -36,6 +36,7 @@
                         </a>
                     </li>
                     {% endif %}
+
                     {% if site.weibo_username %}
                     <li>
                         <a target="_blank" href="http://weibo.com/{{ site.weibo_username }}">
@@ -68,6 +69,7 @@
                         </a>
                     </li>
                     {% endif %}
+
                     {% if site.linkedin_username %}
                     <li>
                         <a target="_blank" href="https://www.linkedin.com/in/{{ site.linkedin_username }}">
@@ -78,6 +80,14 @@
                         </a>
                     </li>
                     {% endif %}
+
+					{% if site.email %}
+                    <li>
+                        <a target="_blank" href="mailto:305858610@qq.com">
+							<i class="fa fa-envelope fa-2x" aria-hidden="true"></i>
+						</a>
+					</li>
+					{% endif %}
                 </ul>
                 <p class="copyright text-muted">
                     Copyright &copy; {{ site.title }} {{ site.time | date: '%Y' }}
