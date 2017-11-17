@@ -18,11 +18,8 @@ tags:
 
 #### 1.1 编译libevent
 ```
-   
 ./configure  --prefix=/home/xiaven/libs/libevent
-
 make
-
 make install
 ```
 
@@ -31,21 +28,15 @@ make install
 设置编译、链接路径
 ```
 export LDFLAGS="-L /home/xiaven/libs/libevent/lib"
-
 export CFLAGS="-I /home/xiaven/libs/libevent/include/"
-
 ./configure --prefix=/home/xiaven/apps/tmux
-
 make
-
 make install
 ```
 
 设置运行时链接库路径
 ```
-
 export LD_LIBRARY_PATH=~/libs/libevent/lib
-
 export PATH=~/apps/tmux/bin/:$PATH
 ```
 
