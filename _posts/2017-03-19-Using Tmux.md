@@ -60,7 +60,7 @@ or simply： `sudo apt-get install tmux`
 ```
 tmux                                    # 运行 tmux -2 以256终端运行
 tmux a                                  # 接入第一个可用session
-C-b d                                   # 返回主 shell ， tmux 依旧在后台运行，里面的命令也保持运行状态
+C-b d                                   # detach tmux
 tmux ls                                 # 显示已有tmux会话（C-b s）
 tmux attach-session -t 数字             # attach到某个tmux session
 
